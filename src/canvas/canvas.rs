@@ -122,7 +122,7 @@ mod tests {
 
         // Read the file and check contents
         let contents = std::fs::read_to_string("test_output.ppm").unwrap();
-        let expected_output = "P3\n3 3\n255\n255 0 0\n0 255 0\n0 0 255\n0 0 0\n0 0 0\n0 0 0\n0 0 0\n0 0 0\n";
+        let expected_output = "P3\n3 3\n255\n255 0 0\n0 255 0\n0 0 255\n0 0 0\n0 0 0\n0 0 0\n0 0 0\n0 0 0\n0 0 0\n";
 
         assert_eq!(contents, expected_output);
     }
