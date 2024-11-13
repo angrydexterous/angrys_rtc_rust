@@ -3,6 +3,10 @@ name = "rtc"
 version = "0.1.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[profile.release]
+opt-level = 3  # Optional: maximize optimization level
+codegen-units = 1  # Optional: for better optimization across units
+lto = true  # Optional: link-time optimization
 
 [dependencies]
+wide = "0.7.28"
