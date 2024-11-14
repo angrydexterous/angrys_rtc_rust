@@ -1,8 +1,8 @@
-
 use canvas::canvas::Canvas;
 
 mod math;
 mod canvas;
+
 fn main() {
     let mut canvas = Canvas::new(800, 600);
 

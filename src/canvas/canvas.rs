@@ -53,7 +53,10 @@ impl Canvas {
 
     /// Runs the window display loop, continuously updating the window.
     /// The `update_callback` allows custom drawing or animation logic to be applied each frame.
-    pub fn run(&mut self, update_callback: impl Fn(&mut Self)) {
+    pub fn run<F>(&mut self, mut update_callback: F)
+    where
+        F: FnMut(&mut Self),
+    {
         while self.window.is_open() && !self.window.is_key_down(Key::Escape) {
             // Call the user-defined update callback to modify the canvas
             update_callback(self);
