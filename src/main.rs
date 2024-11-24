@@ -1,6 +1,5 @@
 use canvas::canvas::Canvas;
 
-mod math;
 mod canvas;
 
 fn main() {
