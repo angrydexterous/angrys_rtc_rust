@@ -1,6 +1,6 @@
 use nalgebra::{Point3, Vector3};
 
-use super::primatives::sphere::Intersect;
+use super::{intersection::Intersection, primatives::sphere::Intersect};
 
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Ray {
@@ -17,7 +17,7 @@ impl Ray {
         self.origin + self.direction * t
     }
 
-    pub fn intersect<T: Intersect>(&self, shape: &T) -> Vec<f64> {
+    pub fn intersect<T: Intersect<T>>(&self, shape: &T) -> Vec<Intersection<T>> {
         shape.intersect(self)
     }
 }

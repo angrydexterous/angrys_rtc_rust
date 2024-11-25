@@ -1,15 +1,15 @@
 use nalgebra::Point3;
-use crate::rtc::ray::Ray;
+use crate::rtc::{intersection::Intersection, ray::Ray};
 
-pub trait Intersect {
-    fn intersect(&self, ray: &Ray) -> Vec<f64>;
+pub trait Intersect<T> {
+    fn intersect(&self, ray: &Ray) -> Vec<Intersection<T>>;
 }
 
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Sphere {}
 
-impl Intersect for Sphere {
-    fn intersect(&self, ray: &Ray) -> Vec<f64> {
+impl Intersect<Sphere> for Sphere {
+    fn intersect(&self, ray: &Ray) -> Vec<Intersection<Sphere>> {
         let sphere_to_ray = ray.origin - Point3::new(0.0, 0.0, 0.0);
         let a = ray.direction.dot(&ray.direction);
         let b = 2.0 * ray.direction.dot(&sphere_to_ray);
@@ -22,7 +22,7 @@ impl Intersect for Sphere {
 
         let t1 = (-b - discriminant.sqrt()) / (2.0 * a);
         let t2 = (-b + discriminant.sqrt()) / (2.0 * a);
-        vec![t1, t2]
+        vec![Intersection::new(t1, *self), Intersection::new(t2, *self)]
     }
 }
 
@@ -40,7 +40,8 @@ mod tests {
         let sphere = Sphere{};
 
         let expected_intersections = vec![4.0, 6.0];
-        assert_eq!(ray.intersect(&sphere), expected_intersections);
+        let intersections: Vec<f64> = ray.intersect(&sphere).iter().map(|i| i.t).collect();
+        assert_eq!(intersections, expected_intersections);
     }
 
     #[test]
@@ -50,8 +51,8 @@ mod tests {
         let ray = Ray::new(origin, direction);
 
         let sphere = Sphere{};
-
         let expected_intersections = vec![5.0, 5.0];
-        assert_eq!(ray.intersect(&sphere), expected_intersections);
+        let intersections: Vec<f64> = ray.intersect(&sphere).iter().map(|i| i.t).collect();
+        assert_eq!(intersections, expected_intersections);
     }
 }
