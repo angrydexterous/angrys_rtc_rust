@@ -14,13 +14,8 @@ impl Canvas {
     /// Creates a new Canvas with the specified width and height and initializes a window.
     pub fn new(width: usize, height: usize) -> Self {
         let buffer = vec![0; width * height];
-        let window = Window::new(
-            "Canvas Display",
-            width,
-            height,
-            WindowOptions::default(),
-        )
-        .expect("Unable to open window");
+        let window = Window::new("Canvas Display", width, height, WindowOptions::default())
+            .expect("Unable to open window");
 
         Canvas {
             width,
@@ -90,11 +85,11 @@ impl Canvas {
         }
         Ok(())
     }
-    
+
     pub fn width(&self) -> usize {
         self.width
     }
-    
+
     pub fn height(&self) -> usize {
         self.height
     }
@@ -118,14 +113,15 @@ mod tests {
         let mut canvas = Canvas::new(3, 3);
         canvas.set_pixel(0, 0, 255, 0, 0); // Red
         canvas.set_pixel(1, 0, 0, 255, 0); // Green
-        canvas.set_pixel(2, 0, 0, 0,  255); // Blue
+        canvas.set_pixel(2, 0, 0, 0, 255); // Blue
 
         // Save canvas to a PPM file
         canvas.save_as_ppm("test_output.ppm").unwrap();
 
         // Read the file and check contents
         let contents = std::fs::read_to_string("test_output.ppm").unwrap();
-        let expected_output = "P3\n3 3\n255\n255 0 0\n0 255 0\n0 0 255\n0 0 0\n0 0 0\n0 0 0\n0 0 0\n0 0 0\n0 0 0\n";
+        let expected_output =
+            "P3\n3 3\n255\n255 0 0\n0 255 0\n0 0 255\n0 0 0\n0 0 0\n0 0 0\n0 0 0\n0 0 0\n0 0 0\n";
 
         assert_eq!(contents, expected_output);
     }

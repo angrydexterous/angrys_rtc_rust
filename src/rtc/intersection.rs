@@ -1,11 +1,11 @@
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub struct Intersection<T> {
     pub t: f64,
-    pub object: T
+    pub object: T,
 }
 
 impl<T> Intersection<T> {
-    pub fn new(t:f64, object:T) -> Self {
+    pub fn new(t: f64, object: T) -> Self {
         Self { t, object }
     }
 
@@ -13,24 +13,34 @@ impl<T> Intersection<T> {
         self.t
     }
 
-    pub fn object(&self) -> &T  {
+    pub fn object(&self) -> &T {
         &self.object
     }
 }
 
 #[derive(Debug)]
 pub struct Intersections<T> {
-    pub intersections: Vec<Intersection<T>>
+    pub intersections: Vec<Intersection<T>>,
 }
 
-impl<T> Intersections<T>{
+impl<T> Intersections<T> {
     pub fn new() -> Self {
-        Self { intersections: Vec::<Intersection<T>>::with_capacity(16) }
+        Self {
+            intersections: Vec::<Intersection<T>>::with_capacity(16),
+        }
     }
 
     pub fn with_intersection(mut self, intersection: Intersection<T>) -> Self {
         self.intersections.push(intersection);
         self
+    }
+}
+
+impl<T> Default for Intersections<T> {
+    fn default() -> Self {
+        Self {
+            intersections: Vec::<Intersection<T>>::new(),
+        }
     }
 }
 
@@ -42,7 +52,7 @@ mod tests {
 
     #[test]
     fn test_intersection() {
-        let sphere = Sphere{};
+        let sphere = Sphere {};
         let intersection = Intersection::new(3.5, sphere);
         assert_eq!(intersection.t(), 3.5);
         assert_eq!(*intersection.object(), sphere);
@@ -50,7 +60,7 @@ mod tests {
 
     #[test]
     fn test_intersections() {
-        let sphere = Sphere{};
+        let sphere = Sphere {};
 
         let intersections = Intersections::new()
             .with_intersection(Intersection::new(1.0, sphere))

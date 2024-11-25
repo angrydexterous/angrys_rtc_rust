@@ -52,5 +52,4 @@ mod tests {
         let expected_position = Point3::new(4.5, 3.0, 4.0);
         assert_eq!(ray.position(t), expected_position);
     }
-
 }

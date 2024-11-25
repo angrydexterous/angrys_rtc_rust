@@ -1,4 +1,4 @@
-use canvas::canvas::Canvas;
+use canvas::Canvas;
 
 mod canvas;
 
@@ -40,12 +40,15 @@ fn main() {
         let radius = 50;
         for x in (circle_x - radius)..(circle_x + radius) {
             for y in (circle_y - radius)..(circle_y + radius) {
-                let dx = x as i32 - circle_x as i32;
-                let dy = y as i32 - circle_y as i32;
-                if dx * dx + dy * dy <= radius * radius {
-                    if x >= 0 && x < canvas.width() as i32 && y >= 0 && y < canvas.height() as i32 {
-                        canvas.set_pixel(x as usize, y as usize, 0, 0, 255);
-                    }
+                let dx = x - circle_x;
+                let dy = y - circle_y;
+                if dx * dx + dy * dy <= radius * radius
+                    && x >= 0
+                    && x < canvas.width() as i32
+                    && y >= 0
+                    && y < canvas.height() as i32
+                {
+                    canvas.set_pixel(x as usize, y as usize, 0, 0, 255);
                 }
             }
         }
@@ -59,7 +62,9 @@ fn main() {
     });
 
     // Save the final canvas as a PPM file when the window is closed
-    canvas.save_as_ppm("output.ppm").expect("Failed to save PPM file");
+    canvas
+        .save_as_ppm("output.ppm")
+        .expect("Failed to save PPM file");
 
     println!("Image saved as output.ppm");
 }
